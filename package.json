@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "Ehsan Moallaee",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EhsanMoallaee/express-typescript.git"
+  },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
