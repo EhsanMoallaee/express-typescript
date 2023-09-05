@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import config from 'config';
 import fs from 'fs';
 import path from 'path';
 
