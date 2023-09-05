@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import config from 'config';
 import { validateUserPasswordService } from "../service/user.service";
-import { createSessionService } from "../service/session.service";
+import { createSessionService, getUserSessionsService } from "../service/session.service";
 import { signJwt } from "../utils/jwt.utils";
 
 
@@ -21,4 +21,10 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     )
 
     return res.status(200).send({accessToken, refreshToken});
+}
+
+export async function getUserSessionsHandler(req: Request, res: Response) {
+    const userId = res.locals.user._id;
+    const sessions = await getUserSessionsService({userId, valid: true});
+    return res.status(200).send(sessions);
 }

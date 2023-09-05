@@ -2,8 +2,9 @@ import { Express, Request, Response } from 'express';
 import { createUserHandler } from './controller/user.controller';
 import validate from './middleware/validateResource';
 import { createUserSchema } from './schema/user.schema';
-import { createUserSessionHandler } from './controller/session.controller';
+import { createUserSessionHandler, getUserSessionsHandler } from './controller/session.controller';
 import { createSessionSchema } from './schema/session.schema';
+import checkUser from './middleware/checkUser';
 
 function routes(app: Express) {
     app.get('/healthCheck', (req: Request, res: Response) => {
@@ -12,6 +13,7 @@ function routes(app: Express) {
 
     app.post('/api/users', validate(createUserSchema), createUserHandler);
     app.post('/api/sessions', validate(createSessionSchema), createUserSessionHandler);
+    app.get('/api/sessions', checkUser, getUserSessionsHandler);
 }
 
 export default routes;
