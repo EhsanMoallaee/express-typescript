@@ -15,6 +15,6 @@ const sessionSchema = new mongoose.Schema({
     userAgent: { type: String }
 }, { timestamps: true })
 
-const SessionModel = mongoose.model('Session', sessionSchema);
+const SessionModel = mongoose.model<SessionDocument>('Session', sessionSchema);
 
 export default SessionModel;
