@@ -6,7 +6,7 @@ export async function createProductService(input: Omit<ProductDocument, 'created
     return await ProductModel.create(input);
 }
 
-export async function findProductService(query: FilterQuery<ProductDocument>, options: QueryOptions = { lean: true }) {
+export async function getProductService(query: FilterQuery<ProductDocument>, options: QueryOptions = { lean: true }) {
     return ProductModel.findOne(query, {}, options);
 }
 
