@@ -6,6 +6,7 @@ import { createProductService, deleteProductService, getProductService, updatePr
 export async function createProductHandler(req: Request<{}, {}, CreateProductInput['body']>, res: Response, next: NextFunction) {
     const userId = res.locals.user._id;
     const body = req.body;
+    
     const product = await createProductService({...body, userId});
     return res.status(201).send(product);
 }
@@ -25,7 +26,7 @@ export async function updateProductHandler(req: Request<UpdateProductInput['para
 
     const product = await getProductService({productId});
     if(!product) return res.sendStatus(404);
-    if(product.userId !== userId) return res.sendStatus(403);
+    if(!product.userId.equals(userId)) return res.sendStatus(403);
 
     const updatedProduct = await updateProductService({productId}, update, { new: true });
     return res.status(200).send(updatedProduct);
@@ -36,7 +37,7 @@ export async function deleteProductHandler(req: Request<DeleteProductInput['para
     const productId = req.params.productId;
     const product = await getProductService({productId});
     if(!product) return res.sendStatus(404);
-    if(product.userId !== userId) return res.sendStatus(403);
+    if(!product.userId.equals(userId)) return res.sendStatus(403);
     await deleteProductService({productId});
     return res.sendStatus(200);
 }

@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
-import { customAlphabet } from 'nanoid';
+// import { customAlphabet } from 'nanoid';
+import * as nanoid from 'nanoid/async';
 import { UserDocument } from './user.model';
 
-const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
+const customAlphabet = nanoid.customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
 export interface ProductInput {
     userId: UserDocument["_id"];
@@ -11,7 +12,7 @@ export interface ProductInput {
     price: number;
     image: string;
 }
-  
+
 export interface ProductDocument extends ProductInput, mongoose.Document {
     createdAt: Date;
     updatedAt: Date;
@@ -22,7 +23,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        default: () => `product_${nanoid()}`
+        default: () => `product_${customAlphabet()}`
     },
     userId: { type: mongoose.Types.ObjectId, ref: 'User' },
     title: { type: String, required: true },
